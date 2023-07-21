@@ -3,15 +3,15 @@ import time
 
 class AlphaBot2(object):
 	
-	def __init__(self,ain1=12,ain2=13,ena=6,bin1=20,bin2=21,enb=26):
+	def __init__(self,ain1=12,ain2=13,ena=6,bin1=16,bin2=21,enb=26):
 		self.AIN1 = ain1
 		self.AIN2 = ain2
 		self.BIN1 = bin1
 		self.BIN2 = bin2
 		self.ENA = ena
 		self.ENB = enb
-		self.PA  = 50
-		self.PB  = 50
+		self.PA  = 10
+		self.PB  = 13
 
 		GPIO.setmode(GPIO.BCM)
 		GPIO.setwarnings(False)
@@ -34,6 +34,7 @@ class AlphaBot2(object):
 		GPIO.output(self.AIN2,GPIO.HIGH)
 		GPIO.output(self.BIN1,GPIO.LOW)
 		GPIO.output(self.BIN2,GPIO.HIGH)
+		#time.sleep(2)
 
 
 	def stop(self):
@@ -43,6 +44,7 @@ class AlphaBot2(object):
 		GPIO.output(self.AIN2,GPIO.LOW)
 		GPIO.output(self.BIN1,GPIO.LOW)
 		GPIO.output(self.BIN2,GPIO.LOW)
+		time.sleep(0.5)
 
 	def backward(self):
 		self.PWMA.ChangeDutyCycle(self.PA)
@@ -51,24 +53,35 @@ class AlphaBot2(object):
 		GPIO.output(self.AIN2,GPIO.LOW)
 		GPIO.output(self.BIN1,GPIO.HIGH)
 		GPIO.output(self.BIN2,GPIO.LOW)
+		time.sleep(0.5)
 
 		
 	def left(self):
-		self.PWMA.ChangeDutyCycle(30)
-		self.PWMB.ChangeDutyCycle(30)
+		self.PWMA.ChangeDutyCycle(10)
+		self.PWMB.ChangeDutyCycle(10)
 		GPIO.output(self.AIN1,GPIO.HIGH)
 		GPIO.output(self.AIN2,GPIO.LOW)
 		GPIO.output(self.BIN1,GPIO.LOW)
 		GPIO.output(self.BIN2,GPIO.HIGH)
+		time.sleep(1)
 
+	def left_circle(self):
+		self.PWMA.ChangeDutyCycle(30)
+		self.PWMB.ChangeDutyCycle(50)
+		GPIO.output(self.AIN1,GPIO.HIGH)
+		GPIO.output(self.AIN2,GPIO.LOW)
+		GPIO.output(self.BIN1,GPIO.LOW)
+		GPIO.output(self.BIN2,GPIO.HIGH)
+		time.sleep(5)
 
 	def right(self):
-		self.PWMA.ChangeDutyCycle(30)
-		self.PWMB.ChangeDutyCycle(30)
+		self.PWMA.ChangeDutyCycle(10)
+		self.PWMB.ChangeDutyCycle(10)
 		GPIO.output(self.AIN1,GPIO.LOW)
 		GPIO.output(self.AIN2,GPIO.HIGH)
 		GPIO.output(self.BIN1,GPIO.HIGH)
 		GPIO.output(self.BIN2,GPIO.LOW)
+		time.sleep(1)
 		
 	def setPWMA(self,value):
 		self.PA = value
@@ -99,7 +112,8 @@ class AlphaBot2(object):
 if __name__=='__main__':
 
 	Ab = AlphaBot2()
-	Ab.forward()
+	Ab.backward()
+
 	try:
 		while True:
 			time.sleep(1)

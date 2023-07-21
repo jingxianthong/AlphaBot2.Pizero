@@ -6,6 +6,7 @@ TRIG = 22
 ECHO = 27
 
 Ab = AlphaBot2()
+repeat_distance = []
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -27,14 +28,20 @@ def Distance():
 print("Ultrasonic_Obstacle_Avoidance")
 try:
 	while True:
+		repeat_distance = Distance()
 		Dist = Distance()
 		print("Distance = %0.2f cm"%Dist)
-		if Dist <= 20:
-			Ab.right()
-#			Ab.left()
+		if Dist < 5:
+			Ab.stop()
+			Ab.backward()
+			#Ab.right()
+			Ab.left()
+		elif repeat_distance == Dist:
+			Ab.backward()
+		
 		else:
 			Ab.forward()
-		time.sleep(0.02)
+		#time.sleep(0.02)
 
 except KeyboardInterrupt:
 	GPIO.cleanup();
